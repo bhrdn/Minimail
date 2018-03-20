@@ -1,0 +1,2 @@
+# minimail
+Simple PHP Mailer
