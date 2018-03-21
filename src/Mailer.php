@@ -84,6 +84,26 @@ class Mailer
     }
 
     /**
+     * Add headers email
+     *
+     * @param array $headers
+     */
+    public function withHeaders(array $headers)
+    {
+        foreach ($headers as $header => $value) {
+            if ($header === 'Date') {
+                $carbon = new Carbon($value);
+                $value  = $carbon->toRfc7231String();
+                // $this->mail->MessageDate = $carbon->toRfc7231String();
+            }
+
+            $this->mail->addCustomHeader($header, $value);
+        }
+
+        return $this;
+    }
+
+    /**
      * Set mailer debug mode
      *
      * @param string $mode
