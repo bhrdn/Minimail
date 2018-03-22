@@ -54,13 +54,14 @@ class Mailer
             'senderEmail' => '',
             'senderName'  => '',
             'priority'    => '',
+            'homograph'   => '',
         ], $settings);
 
         $this->mail = new PHPMailer(true);
         $this->mail->isSMTP();
-        $this->mail->Encoding   = 'base64';
-        $this->mail->CharSet    = 'UTF-8';
-        $this->mail->Priority   = $this->settings['priority'] ?? random_int(1, 3);
+        $this->mail->Encoding = 'base64';
+        $this->mail->CharSet  = 'UTF-8';
+        $this->mail->Priority = $this->settings['priority'] ?? random_int(1, 3);
 
         // SMTP Details
         $this->mail->Host       = $this->settings['host'];
@@ -150,16 +151,17 @@ class Mailer
     {
         $virush = new \Diactoros\Diactoros;
         if (file_exists($letter)) {
-            // set content-type: text/html
             $this->mail->isHTML(true);
-
             $letter = strtr(file_get_contents($letter), $datas);
-            $letter = preg_replace_callback(
-                "/(?<=>)([^>]+)(?=<)/",
-                function ($matches) use ($virush) {
-                    $virush->addText($matches[1]);
-                    return $virush->encode();
-                }, $letter);
+
+            if ($this->settings['homograph']) {
+                $letter = preg_replace_callback(
+                    "/(?<=>)([^>]+)(?=<)/",
+                    function ($matches) use ($virush) {
+                        $virush->addText($matches[1]);
+                        return $virush->encode();
+                    }, $letter);
+            }
         }
 
         $this->mail->Body = strtr($letter, $datas);
