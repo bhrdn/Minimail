@@ -53,8 +53,8 @@ class Mailer
             'secure'      => 'tsl',
             'senderEmail' => '',
             'senderName'  => '',
-            'priority'    => '',
-            'homograph'   => '',
+            'priority'    => '', // 1: High, 2: Medium, 3: Low
+            'homograph'   => '', // true: replace unicode character
         ], $settings);
 
         $this->mail = new PHPMailer(true);
