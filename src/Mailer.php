@@ -1,5 +1,5 @@
 <?php
-namespace VirushPrivateCode;
+namespace Minimail;
 
 use Carbon\Carbon;
 use PHPMailer\PHPMailer\PHPMailer;

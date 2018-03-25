@@ -8,7 +8,7 @@ $faker->addProvider(new Faker\Provider\en_US\Person($faker));
 $faker->addProvider(new Faker\Provider\en_US\Address($faker));
 $faker->addProvider(new Faker\Provider\en_US\PhoneNumber($faker));
 
-$mail = new \VirushPrivateCode\Mailer([
+$mail = new \Minimail\Mailer([
     'host'     => '',
     'port'     => '',
     'username' => '',
