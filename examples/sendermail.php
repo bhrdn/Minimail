@@ -3,11 +3,6 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 use PHPMailer\PHPMailer\Exception;
 
-$faker = new Faker\Generator();
-$faker->addProvider(new Faker\Provider\en_US\Person($faker));
-$faker->addProvider(new Faker\Provider\en_US\Address($faker));
-$faker->addProvider(new Faker\Provider\en_US\PhoneNumber($faker));
-
 $mail = new \Minimail\Mailer([
     'host'     => '',
     'port'     => '',
@@ -23,7 +18,7 @@ if (file_exists($list) and file_exists($letter)) {
         }
 
         $mail->setSender('foo@bar.com', 'Foo')
-            ->withHeaders(['Date' => '2 days ago'])
+            ->withHeaders(['X-Foo' => 'Bar'])
             ->withSubject('Foo subject')
             ->withBody($letter, [
                 '{url}' => '#',
